@@ -1,1 +1,301 @@
-Hi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nascent — something's growing here</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #1D9E75;
+    --teal-light: #5DCAA5;
+    --orange: #E8854A;
+    --ink: #1A1A16;
+    --ink-muted: #5A5A50;
+    --glass-bg: rgba(245,240,230,0.5);
+    --glass-border: rgba(255,255,255,0.42);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #BFB9AC;
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 50% at 10% 15%, rgba(93,202,165,0.28) 0%, transparent 65%),
+      radial-gradient(ellipse 45% 40% at 88% 80%, rgba(232,133,74,0.16) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 45% at 65% 10%, rgba(29,158,117,0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 35% 35% at 30% 85%, rgba(93,202,165,0.1) 0%, transparent 55%);
+  }
+
+  body > * { position: relative; z-index: 1; }
+
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(230,224,212,0.52);
+    backdrop-filter: blur(28px) saturate(1.6);
+    -webkit-backdrop-filter: blur(28px) saturate(1.6);
+    border-bottom: 1px solid rgba(255,255,255,0.48);
+    box-shadow: 0 1px 0 rgba(29,158,117,0.07);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 0.6rem;
+    text-decoration: none; color: var(--ink);
+  }
+  .nav-brand img { width: 28px; height: 28px; object-fit: contain; }
+  .nav-brand-name { font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 600; }
+  .nav-dot { font-size: 0.72rem; color: var(--ink-muted); font-weight: 300; letter-spacing: 0.05em; }
+
+  .hero {
+    max-width: 740px; margin: 0 auto;
+    padding: 8rem 2rem 5rem;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(93,202,165,0.2);
+    border: 1px solid rgba(29,158,117,0.32);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 2rem; padding: 0.35rem 1rem;
+    font-size: 0.7rem; color: var(--teal); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 2.5rem;
+  }
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--teal);
+    animation: blink 2.2s ease-in-out infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+  .hero-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(2.4rem, 6.5vw, 4.2rem);
+    font-weight: 400; line-height: 1.13; letter-spacing: -0.025em;
+    margin-bottom: 1.6rem; color: var(--ink);
+  }
+  .hero-title em { font-style: italic; color: var(--teal); }
+
+  .hero-sub {
+    font-size: 1rem; color: var(--ink-muted); line-height: 1.8; font-weight: 300;
+    max-width: 440px; margin: 0 auto 3rem;
+  }
+
+  .hero-actions { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+
+  .btn {
+    padding: 0.78rem 1.9rem; border-radius: 2rem; font-size: 0.88rem;
+    text-decoration: none; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    display: inline-block; cursor: pointer; border: none; font-weight: 400;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-teal {
+    background: var(--teal); color: #fff;
+    box-shadow: 0 2px 16px rgba(29,158,117,0.28);
+  }
+  .btn-teal:hover { box-shadow: 0 8px 28px rgba(29,158,117,0.4); }
+  .btn-glass {
+    background: rgba(245,240,230,0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.52);
+    color: var(--ink-muted);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .btn-glass:hover { color: var(--teal); border-color: rgba(29,158,117,0.38); }
+
+  .mandala-divider {
+    display: flex; justify-content: center; padding: 1.8rem 0;
+  }
+  .mandala-divider img { width: 38px; opacity: 0.18; }
+
+  .section {
+    padding: 4.5rem 3rem;
+    max-width: 1060px; margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,0.32);
+  }
+  .section-title {
+    font-family: 'Lora', serif; font-size: 1.65rem; font-weight: 400; margin-bottom: 0.5rem;
+  }
+  .section-title em { font-style: italic; color: var(--teal); }
+  .section-sub { font-size: 0.88rem; color: var(--ink-muted); }
+
+  .what-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; margin-top: 2.5rem;
+  }
+  .what-card {
+    padding: 2rem 1.6rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 24px rgba(29,158,117,0.07), inset 0 1px 0 rgba(255,255,255,0.7);
+    border-radius: 1.1rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  }
+  .what-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(93,202,165,0.5);
+    box-shadow: 0 14px 40px rgba(29,158,117,0.14), inset 0 1px 0 rgba(255,255,255,0.75);
+  }
+  .card-num {
+    font-family: 'Lora', serif; font-size: 1.5rem;
+    color: rgba(90,90,80,0.28); margin-bottom: 0.75rem; line-height: 1;
+  }
+  .card-title { font-size: 0.93rem; color: var(--ink); margin-bottom: 0.45rem; }
+  .card-body { font-size: 0.82rem; color: var(--ink-muted); line-height: 1.68; }
+
+  .notify-section {
+    text-align: center; padding: 5.5rem 2rem 6.5rem;
+    max-width: 480px; margin: 0 auto;
+  }
+  .notify-section .section-title { font-size: 1.55rem; margin-bottom: 0.6rem; }
+  .notify-section .section-sub { margin-bottom: 2rem; }
+
+  .email-row { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+  .email-input {
+    flex: 1; min-width: 190px; padding: 0.78rem 1.3rem; border-radius: 2rem;
+    background: rgba(245,240,230,0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.55);
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.07);
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--ink); outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .email-input::placeholder { color: rgba(90,90,80,0.45); }
+  .email-input:focus {
+    border-color: rgba(93,202,165,0.65);
+    box-shadow: 0 0 0 3px rgba(93,202,165,0.12), inset 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.32);
+    background: rgba(220,214,202,0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-left { display: flex; align-items: center; gap: 0.55rem; }
+  .footer-left img { width: 20px; opacity: 0.4; }
+  .footer-left span { font-size: 0.76rem; color: var(--ink-muted); }
+  .footer-url { font-size: 0.76rem; color: var(--teal); text-decoration: none; }
+  .footer-url:hover { text-decoration: underline; }
+
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+
+  @media (max-width: 720px) {
+    nav { padding: 1.1rem 1.5rem; }
+    .hero { padding: 5.5rem 1.5rem 3rem; }
+    .section { padding: 3rem 1.5rem; }
+    .what-grid { grid-template-columns: 1fr; }
+    footer { padding: 1.8rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-brand">
+    <img src="favicon.jpg" alt="nascent" onerror="this.style.display='none'">
+    <span class="nav-brand-name">nascent</span>
+  </a>
+  <span class="nav-dot">nascent.sbs</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Something is growing
+  </div>
+  <h1 class="hero-title">
+    We're a startup.<br>We're <em>figuring it out.</em><br>You should join us.
+  </h1>
+  <p class="hero-sub">
+    nascent is building at the intersection of mindful growth and early-stage ambition. We don't have all the answers yet. That's kind of the whole point.
+  </p>
+  <div class="hero-actions">
+    <a href="#notify" class="btn btn-teal">Stay in the loop</a>
+    <a href="#about" class="btn btn-glass">What even is this</a>
+  </div>
+</div>
+
+<div class="mandala-divider">
+  <img src="favicon.jpg" alt="" onerror="this.style.display='none'">
+</div>
+
+<div class="section fade-in" id="about">
+  <div class="section-title">What we <em>are</em></div>
+  <p class="section-sub">Three honest things about nascent, right now.</p>
+  <div class="what-grid">
+    <div class="what-card fade-in">
+      <div class="card-num">01</div>
+      <div class="card-title">Very early</div>
+      <p class="card-body">We have a vision, a logo, and a strong opinion about how startups should be built. The rest is in progress.</p>
+    </div>
+    <div class="what-card fade-in delay-1">
+      <div class="card-num">02</div>
+      <div class="card-title">Very intentional</div>
+      <p class="card-body">Growth for its own sake doesn't interest us. We care about building things that should exist — slowly and on purpose.</p>
+    </div>
+    <div class="what-card fade-in delay-2">
+      <div class="card-num">03</div>
+      <div class="card-title">Very open</div>
+      <p class="card-body">We're looking for early believers who see what we're trying to do before we can fully explain it ourselves.</p>
+    </div>
+  </div>
+</div>
+
+<div class="notify-section fade-in" id="notify">
+  <div class="section-title">Be the first to know<br>when we <em>exist more.</em></div>
+  <p class="section-sub">No spam. No newsletter. Just one email when something real happens.</p>
+  <div class="email-row">
+    <input type="email" class="email-input" id="emailInput" placeholder="your@email.com">
+    <button class="btn btn-teal" onclick="handleEmail(this)">Notify me</button>
+  </div>
+  <p id="confirm" style="margin-top:1rem;font-size:0.82rem;color:var(--teal);display:none;">
+    You're on the list. We'll reach out when it matters. 🌱
+  </p>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <img src="favicon.jpg" alt="" onerror="this.style.display='none'">
+    <span>© 2026 nascent. all rights reserved (probably).</span>
+  </div>
+  <a href="https://nascent.sbs" class="footer-url">nascent.sbs</a>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  function handleEmail(btn) {
+    const input = document.getElementById('emailInput');
+    if (!input.value.includes('@')) { input.style.borderColor = '#E8854A'; return; }
+    input.style.borderColor = '#1D9E75';
+    btn.textContent = 'Done \u2713'; btn.disabled = true;
+    document.getElementById('confirm').style.display = 'block';
+  }
+</script>
+</body>
+</html>
